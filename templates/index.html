@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Maktabah Syamila</h1>
+        <p class="lead">Jadi ada deskripsi aplikasinya kah mbk? aplikasi apa nih?</p>
+    </div>
+</div>
+<div class="container">
+    <form action="{{ url_for('result') }}" method="get">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-search"></i></div>
+                </div>
+                <input type="text" name="search" class="form-control" id="searchBox">
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+ 
