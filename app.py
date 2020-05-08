@@ -3,6 +3,7 @@ from maktabah import getResult
 import time
 
 app = Flask(__name__)
+app.config.from_pyfile('config.py')
 
 @app.route('/', methods=['GET', 'POST'])
 def index(): 
@@ -25,4 +26,4 @@ def result():
         return redirect('/')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug = True) 
+    app.run(host='0.0.0.0') 
