@@ -24,8 +24,8 @@
     <ul class="list-group list-group-flush">
         {% for result in results %}
         <li class="list-group-item">
-            <h4><i class="fas fa-stream"></i> Kategori: {{ result['kategori'] }}</h4> 
-            <h4><i class="fas fa-quran"></i> Kitab: <a href="">{{ result['namakitab'] }}</a></h4>
+            <!-- <h4><i class="fas fa-stream"></i> Kategori: {{ result['kategori'] }}</h4>  -->
+            <h4><a href="/result/detail?kitab={{result['namakitab']}}&hal={{result['halaman']}}&data={{result['isikitab']}}">{{ result['namakitab'] }}</a></h4>
             <!-- <h4><i class="fas fa-file-alt"></i> Halaman: ....</h4>  -->
         </li>
         {% endfor %}
