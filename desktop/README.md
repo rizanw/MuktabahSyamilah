@@ -10,5 +10,5 @@ cara install python dengan TKinter:
 https://tkdocs.com/tutorial/install.html
 
 cara compile:
-- pyinstaller --onefile app.py
-- buka folder dist, copy folder data ke dalamnya, buka file app.exe
+- pyinstaller --onefile app.spec
+- buka folder dist, nanti akan keluar file exe nya.

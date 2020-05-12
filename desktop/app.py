@@ -4,7 +4,7 @@ from tkinter.messagebox import showinfo
 from ttkthemes import ThemedTk
 from maktabah import *
 import textwrap, threading, time
- 
+
 class MenuBar(Menu):
     def __init__(self, parent):
         Menu.__init__(self, parent)
@@ -28,7 +28,7 @@ class Application(Frame):
         self.master['menu'] = self.menubar
 
         self.splash()
-        self.splashFrame.after(5000, self.create_widgets)
+        self.splashFrame.after(4000, self.create_widgets)
         self.pack(fill=BOTH, expand=True) 
     
     def splash(self):
@@ -109,7 +109,11 @@ class Application(Frame):
         start_time = time.time()
         res = getResult(query)
         total_time = (time.time() - start_time)
-        for result in res: 
+        results = []
+        for result in res:
+            if result not in results:
+                results.append({'namakitab': result["namakitab"], 'kategori': result["kategori"]})
+        for result in results: 
             self.listBox.insert('', 'end', values=(self.wrap(result["kategori"]), self.wrap(result["namakitab"])))
         self.statusTitle['text'] = "Status: READY!"
         self.status['text'] = "Total: " + str(len(res)) +" found | Time: " + str(total_time)
