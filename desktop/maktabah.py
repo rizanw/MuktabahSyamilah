@@ -53,7 +53,7 @@ def getResult(text):
     hasilQE = modelFT.wv.most_similar(text)
     hasilQE = [(strip_tashkeel(''.join(c for c in hasilQE[i][0] if not ud.category(
         c).startswith('P'))), hasilQE[i][1]) for i in range(len(hasilQE))]
-    print(hasilQE)
+    # print(hasilQE)
 
     # TF-IDF
     tfidf_vectorizer = TfidfVectorizer()
@@ -71,16 +71,12 @@ def getResult(text):
         norm_tf.append(norm_tfidf)
 
     tfidf_doc = tfidf_vectorizer.fit_transform(norm_tf)
-
-    # PIFQvectorizer = CountVectorizer()
-    # vectoreTF = PIFQvectorizer.fit_transform(norm_tf)
-    # featureTf = PIFQvectorizer.get_feature_names()
-
+ 
     cosim = []
     nilaicosim = []
     for i in hasilQE:
         tes = i[0]
-        print(tes)
+        # print(tes)
         tfidf_query = tfidf_vectorizer.transform([tes])
         cos = 0.0
         # hitung kedekatan query pada masing masing dokumen
@@ -88,28 +84,31 @@ def getResult(text):
         # print(type(cos))
         cosim.append(max(cos))
         nilaicosim.append(cos)
-
-        # countTF = []
-        # s = ''.join(c for c in tes if not ud.category(c).startswith('P'))
-        # s = strip_tashkeel(s)
-        # for k in range(len(featureTf)):
-        #   if featureTf[k] == s:
-        #     # print(k)
-        #     for j in range(vectoreTF.shape[0]):
-        #       countTF.append(vectoreTF[j,k])
-        # if len(countTF) < 1 :
-        #   for j in range(vectoreTF.shape[0]):
-        #     countTF.append(0.0)
-
+ 
+    print("======= hasil Cosim ===========") 
     finaloutput = []
-    print("======= hasil Cosim ===========")
     angka = 0
-    for i in nilaicosim:
+    for i in nilaicosim: 
         for j in range(len(i)):
             if i[j] == cosim[angka]:
                 print(kategori[0], '-', namakitab[j], '-', i[j])
                 finaloutput.append(
-                    {'namakitab': namakitab[j], 'kategori': kategori[0]})
+                    {'namakitab': namakitab[j], 'kategori': kategori[0], 'nilai': i[j]})
         angka += 1
 
+    # len_finaloutput = len(finaloutput)
+    # for i in range(0, finaloutput):
+    #     for j in range(0, len_finaloutput-i-1):
+    #         if (finaloutput[j] < finaloutput[j+1]):
+    #             temp = finaloutput[j]
+    #             finaloutput[j] = finaloutput[j+1]
+    #             finaloutput[j+1] = temp 
+
     return finaloutput
+
+if __name__ == "__main__":
+    text="الدليل"
+    print("test case:", text)
+    res = getResult(text)
+    print(res)
+    print(reversed(sorted(res, key=lambda k: k['nilai'])))

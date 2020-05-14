@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter import ttk 
 from tkinter.messagebox import showinfo
 from ttkthemes import ThemedTk
-from maktabah import *
+# from maktabah import *
+from kitab import *
 import textwrap, threading, time
 
 class MenuBar(Menu):
@@ -28,7 +29,7 @@ class Application(Frame):
         self.master['menu'] = self.menubar
 
         self.splash()
-        self.splashFrame.after(4000, self.create_widgets)
+        self.splashFrame.after(3000, self.create_widgets)
         self.pack(fill=BOTH, expand=True) 
     
     def splash(self):
@@ -65,10 +66,12 @@ class Application(Frame):
  
         self.listBox = ttk.Treeview(self, columns=(1,2), show="headings")
         self.listBox.pack(fill=BOTH, expand=1, anchor=CENTER, pady= 5, padx=5)
-        self.listBox.heading(1, text="Kategori")
-        self.listBox.heading(2, text="Kitab") 
+        self.listBox.heading(1, text="Kitab")
+        self.listBox.heading(2, text="Halaman") 
+        # self.listBox.heading(3, text="nilai") 
         self.listBox.column(1, anchor=E)
         self.listBox.column(2, anchor=E)
+        # self.listBox.column(3, anchor=E)
 
         self.statusBar = ttk.Frame(self)
         self.statusBar.pack(fill=X)
@@ -104,17 +107,20 @@ class Application(Frame):
         else:
             self.arabic_popup()
 
-    def process_data(self):   
+    def process_data(self):    
+        for i in self.listBox.get_children():
+            self.listBox.delete(i)
         query = self.searchBox.get() 
         start_time = time.time()
         res = getResult(query)
+        # res = sorted(res, key=lambda k: k['nilai'], reverse=True)
         total_time = (time.time() - start_time)
-        results = []
-        for result in res:
-            if result not in results:
-                results.append({'namakitab': result["namakitab"], 'kategori': result["kategori"]})
-        for result in results: 
-            self.listBox.insert('', 'end', values=(self.wrap(result["kategori"]), self.wrap(result["namakitab"])))
+        # results = []
+        # for result in res:
+            # if result not in results:
+                # results.append({'namakitab': result["namakitab"], 'kategori': result["kategori"], 'nilai': result["nilai"]})
+        for result in res: 
+            self.listBox.insert('', 'end', values=(self.wrap(result["namakitab"]), self.wrap(result["halaman"])))
         self.statusTitle['text'] = "Status: READY!"
         self.status['text'] = "Total: " + str(len(res)) +" found | Time: " + str(total_time)
         self.searchButton["state"] = "normal"
