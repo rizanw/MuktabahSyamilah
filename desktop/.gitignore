@@ -1,5 +1,7 @@
 # project private dir
 data/*
+dataset/*
+Model/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

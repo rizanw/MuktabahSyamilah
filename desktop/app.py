@@ -2,8 +2,7 @@ from tkinter import *
 from tkinter import ttk 
 from tkinter.messagebox import showinfo
 from ttkthemes import ThemedTk
-# from maktabah import *
-from kitab import *
+from isikitab import * 
 import textwrap, threading, time
 
 class MenuBar(Menu):
@@ -72,6 +71,7 @@ class Application(Frame):
         self.listBox.column(1, anchor=E)
         self.listBox.column(2, anchor=E)
         # self.listBox.column(3, anchor=E)
+        self.listBox.bind("<Double-1>", self.OnDoubleClick)
 
         self.statusBar = ttk.Frame(self)
         self.statusBar.pack(fill=X)
@@ -87,6 +87,18 @@ class Application(Frame):
         self.status['relief'] = SUNKEN
         self.status['anchor'] = E
         self.status.pack(side=RIGHT, fill=X, expand=True)
+    
+    def OnDoubleClick(self, event):
+        item = self.listBox.identify('item',event.x,event.y) 
+        top = Toplevel()
+        top.title(self.listBox.item(item,"values")[1] + " " + self.listBox.item(item,"values")[0])
+        top.geometry("480x360")
+        namakitab = ttk.Label(top)
+        namakitab['text'] = "\n" + self.listBox.item(item,"values")[0] + "\n"
+        namakitab.pack()
+        isikitab = ttk.Label(top)
+        isikitab['text'] = self.listBox.item(item,"values")[2]
+        isikitab.pack()
 
     def wrap(self, string, length=64):
         return '\n'.join(textwrap.wrap(string, length))
@@ -120,7 +132,7 @@ class Application(Frame):
             # if result not in results:
                 # results.append({'namakitab': result["namakitab"], 'kategori': result["kategori"], 'nilai': result["nilai"]})
         for result in res: 
-            self.listBox.insert('', 'end', values=(self.wrap(result["namakitab"]), self.wrap(result["halaman"])))
+            self.listBox.insert('', 'end', values=(self.wrap(result["namakitab"]), self.wrap(result["halaman"]), self.wrap(result["isikitab"])))
         self.statusTitle['text'] = "Status: READY!"
         self.status['text'] = "Total: " + str(len(res)) +" found | Time: " + str(total_time)
         self.searchButton["state"] = "normal"
