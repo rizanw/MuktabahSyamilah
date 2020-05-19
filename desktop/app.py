@@ -92,19 +92,21 @@ class Application(Frame):
         item = self.listBox.identify('item',event.x,event.y) 
         top = Toplevel()
         top.title(self.listBox.item(item,"values")[1] + " " + self.listBox.item(item,"values")[0])
-        top.geometry("480x360")
-        namakitab = ttk.Label(top)
+        top.minsize(480, 360)
+        top.config(bg="white")
+        namakitab = ttk.Label(top, background="white")
         namakitab['text'] = "\n" + self.listBox.item(item,"values")[0] + "\n"
         namakitab.pack()
-        isikitab = ttk.Label(top)
-        isikitab['text'] = self.listBox.item(item,"values")[2]
+        isikitab = ttk.Label(top, background="white")
+        isikitab['text'] = self.listBox.item(item,"values")[2] + "\n"
         isikitab.pack()
 
     def wrap(self, string, length=64):
         return '\n'.join(textwrap.wrap(string, length))
 
     def search(self):
-        query = self.searchBox.get() 
+        query = self.searchBox.get().strip()
+        print("query:", query)
         if ('\u0600' <= query <= '\u06FF' or
             '\u0750' <= query <= '\u077F' or
             '\u08A0' <= query <= '\u08FF' or
@@ -124,13 +126,9 @@ class Application(Frame):
             self.listBox.delete(i)
         query = self.searchBox.get() 
         start_time = time.time()
-        res = getResult(query)
-        # res = sorted(res, key=lambda k: k['nilai'], reverse=True)
+        res = getResult(query) 
         total_time = (time.time() - start_time)
-        # results = []
-        # for result in res:
-            # if result not in results:
-                # results.append({'namakitab': result["namakitab"], 'kategori': result["kategori"], 'nilai': result["nilai"]})
+        
         for result in res: 
             self.listBox.insert('', 'end', values=(self.wrap(result["namakitab"]), self.wrap(result["halaman"]), self.wrap(result["isikitab"])))
         self.statusTitle['text'] = "Status: READY!"
