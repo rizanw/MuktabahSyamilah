@@ -32,16 +32,16 @@ def normalizeArabic(text):
 def getResult(text):
     print("START READ AND PREPROCESSING", text)
     # kitab = np.load('dataset/numpy/kitabsave.npy', allow_pickle=True)
-    kitab = np.load(resource_path('./data/dataset/kitabsave.npy'), allow_pickle=True)
+    kitab = np.load(resource_path('./data/numpy/kitabsave.npy'), allow_pickle=True)
     kitab = kitab.tolist()
     # sentence_clear = np.load('dataset/numpy/sentence_clearsave.npy', allow_pickle=True)
-    sentence_clear = np.load(resource_path('./data/dataset/sentence_clearsave.npy'), allow_pickle=True)
+    sentence_clear = np.load(resource_path('./data/numpy/sentence_clearsave.npy'), allow_pickle=True)
     sentence_clear = sentence_clear.tolist()
     # kategori = np.load('dataset/numpy/kategori.npy', allow_pickle=True)
-    kategori = np.load(resource_path('./data/dataset/kategori.npy'), allow_pickle=True)
+    kategori = np.load(resource_path('./data/numpy/kategori.npy'), allow_pickle=True)
     kategori = kategori.tolist()
     # namakitab = np.load('dataset/numpy/namakitab.npy', allow_pickle=True)
-    namakitab = np.load(resource_path('./data/dataset/namakitab.npy'), allow_pickle=True)
+    namakitab = np.load(resource_path('./data/numpy/namakitab.npy'), allow_pickle=True)
     namakitab = namakitab.tolist()
 
     # kitab[0][1]

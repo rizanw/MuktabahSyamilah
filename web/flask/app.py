@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash
-from maktabah import getResult
+from maktabah2 import getResult
 import time
 
 app = Flask(__name__)

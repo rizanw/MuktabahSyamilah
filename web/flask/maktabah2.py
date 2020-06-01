@@ -114,6 +114,7 @@ def getResult(text):
 
     #     print("======= hasil Cosim ===========")
     angka = 0
+    finaloutput = []
     for i in nilaicosim:
     #         print(hasilQE[angka][0])
         for j in range(len(i)):
@@ -132,18 +133,17 @@ def getResult(text):
                         halamankitabcosim.append(tessplit[4])
                         isikitabcosim.append(tessplit[5])
                         inputandicosim.append(kata)
+                        finaloutput.append({"namakitab":namakitab[iterkitab], "halaman":tessplit[4],"isikitab":tessplit[5]})
                         break
                 break
         angka += 1
             
     print("============== selesai ===============")
-    finaloutput = []
 
     nilaihasilcosim = []
     for i in cosimhasilnilai:
         nilaihasilcosim.append(i[0])
-        finaloutput.append({"namakitab":namakitabcosim, "halaman":halamankitabcosim,"isikitab":isikitabcosim})
-
+    
     dfcosim = pd.DataFrame(list(zip(inputandicosim, cosimhasil, hasilqenilaidicosim, nilaihasilcosim, namakitabcosim, halamankitabcosim, isikitabcosim)), 
                 columns =['inputan kata','QE', 'Nilai QE', 'Nilai Cosim', 'nama kitab', 'halaman', 'isi']) 
 
